@@ -199,16 +199,16 @@ public class DlgHitungLab extends javax.swing.JFrame {
                 umur = Double.valueOf(Tumur.getText());
                 if (Tjk.getText().equals("Laki-Laki") && (nilai <= nilai1)){
                     jumlah = 142 * (Math.pow((nilai/nilai1),(-0.302))) * Math.pow(0.9938, umur);               
-                    Thasil.setText(String.valueOf((String.format("%.2f", jumlah))));
+                    Thasil.setText(String.valueOf(Math.round(jumlah)));
                 }else if (Tjk.getText().equals("Laki-Laki") && (nilai > nilai1)){
                     jumlah = 142 * (Math.pow((nilai/nilai1),(-1.200))) * Math.pow(0.9938, umur);
-                    Thasil.setText(String.valueOf((String.format("%.2f", jumlah))));
+                    Thasil.setText(String.valueOf(Math.round(jumlah)));
                 }else if (Tjk.getText().equals("Perempuan") && (nilai <= nilai2)){
-                    jumlah = 142 * (Math.pow((nilai/nilai2),(-0.241))) * Math.pow(0.9938, umur) * 1012;
-                    Thasil.setText(String.valueOf((String.format("%.2f", jumlah))));
+                    jumlah = 142 * (Math.pow((nilai/nilai2),(-0.241))) * (Math.pow(0.9938, umur)) * 1.012;
+                    Thasil.setText(String.valueOf(Math.round(jumlah)));
                 }else if (Tjk.getText().equals("Perempuan") && (nilai > nilai2)){
-                    jumlah = 142 * (Math.pow((nilai/nilai2),(-1.200))) * Math.pow(0.9938, umur) * 1012;
-                    Thasil.setText(String.valueOf((String.format("%.2f", jumlah))));
+                    jumlah = 142 * (Math.pow((nilai/nilai2),(-1.200))) * (Math.pow(0.9938, umur)) * 1.012;
+                    Thasil.setText(String.valueOf(Math.round(jumlah)));
                 }               
             }
         }
