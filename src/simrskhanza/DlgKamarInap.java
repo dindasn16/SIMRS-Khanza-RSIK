@@ -4565,7 +4565,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         R2.setPreferredSize(new java.awt.Dimension(90, 23));
         panelCari.add(R2);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-12-2022" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17-12-2022" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -4588,7 +4588,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         jLabel22.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel22);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-12-2022" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17-12-2022" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -4614,7 +4614,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         R3.setPreferredSize(new java.awt.Dimension(75, 23));
         panelCari.add(R3);
 
-        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-12-2022" }));
+        DTPCari3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17-12-2022" }));
         DTPCari3.setDisplayFormat("dd-MM-yyyy");
         DTPCari3.setName("DTPCari3"); // NOI18N
         DTPCari3.setOpaque(false);
@@ -4637,7 +4637,7 @@ public class DlgKamarInap extends javax.swing.JDialog {
         jLabel25.setPreferredSize(new java.awt.Dimension(25, 23));
         panelCari.add(jLabel25);
 
-        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "08-12-2022" }));
+        DTPCari4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "17-12-2022" }));
         DTPCari4.setDisplayFormat("dd-MM-yyyy");
         DTPCari4.setName("DTPCari4"); // NOI18N
         DTPCari4.setOpaque(false);
@@ -6928,15 +6928,40 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     private void MnSensusRanapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnSensusRanapActionPerformed
         if(tabMode.getRowCount()==0){
             JOptionPane.showMessageDialog(null,"Maaf, table masih kosong...!!!!");
-            TCari.requestFocus();
-        }else{
-            Valid.panggilUrl("billing/LaporanSensusHarian.php?tanggal1="+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+"&tanggal2="+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+"&kamar="+BangsalCari.getText().replaceAll(" ","_"));                       
+//            TCari.requestFocus();
+        }else if(tabMode.getRowCount()!=0){
+            try{
+                 Map<String, Object> param = new HashMap<>();    
+                 param.put("namars",akses.getnamars());
+                 param.put("alamatrs",akses.getalamatrs());
+                 param.put("kotars",akses.getkabupatenrs());
+                 param.put("propinsirs",akses.getpropinsirs());
+                 param.put("kontakrs",akses.getkontakrs());
+                 param.put("emailrs",akses.getemailrs());   
+                 param.put("logo",Sequel.cariGambar("select setting.logo from setting"));
+                 param.put("tgl_awal", (DTPCari1.getSelectedItem() + ""));
+                 param.put("tgl_akhir", (DTPCari2.getSelectedItem() + ""));
+                 param.put("total_pasien",Sequel.cariIsi(("select count(no_rawat) from kamar_inap where tgl_masuk between '" + Valid.SetTgl(DTPCari1.getSelectedItem() + "")  + "' and '" + Valid.SetTgl(DTPCari2.getSelectedItem() + "")  + "'")));
+//                 param.put("rujuk_masuk",Sequel.cariIsi("select if(count(no_rawat)>0,'Ya','') from rujuk_masuk where no_rawat='" + param + "'?",rs2.getString("no_rawat")));
+                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                 Valid.MyReportqry("rptSensusHarianRanap.jasper","report","::[ Sensus Harian Ranap ]::","select kamar_inap.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien,penjab.png_jawab,kamar.kelas, "+
+"                                   kamar_inap.kd_kamar,bangsal.nm_bangsal,kamar_inap.tgl_masuk, " +
+"                                   kamar_inap.tgl_keluar,kamar_inap.stts_pulang,dokter.nm_dokter, spesialis.nm_sps, if(count(rujuk_masuk.no_rawat)>1,'Ya','') as rujuk_masuk1, if(count(rujuk_masuk.no_rawat)>1,'','Tidak') as rujuk_masuk2 from kamar_inap inner join reg_periksa " +
+"                                   inner join pasien inner join kamar inner join bangsal inner join dokter inner join penjab inner join spesialis inner join rujuk_masuk " +
+"                                   on kamar_inap.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis " +
+"                                   and reg_periksa.kd_dokter=dokter.kd_dokter and reg_periksa.kd_pj=penjab.kd_pj " +
+"                                   and kamar_inap.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal and dokter.kd_sps=spesialis.kd_sps and kamar_inap.no_rawat=rujuk_masuk.no_rawat where " +
+"                                   kamar_inap.tgl_masuk between '" + Valid.SetTgl(DTPCari1.getSelectedItem() + "")  + "' and '" + Valid.SetTgl(DTPCari2.getSelectedItem() + "")  + "'  group by kamar_inap.no_rawat",param);
+                 this.setCursor(Cursor.getDefaultCursor());            
+            }catch(Exception e){
+                System.out.println("Notifikasi : "+e);
+            } 
         }
+        
+//        }else{
+//            Valid.panggilUrl("billing/LaporanSensusHarian.php?tanggal1="+Valid.SetTgl(DTPCari1.getSelectedItem()+"")+"&tanggal2="+Valid.SetTgl(DTPCari2.getSelectedItem()+"")+"&kamar="+BangsalCari.getText().replaceAll(" ","_"));                       
+//        }
     }//GEN-LAST:event_MnSensusRanapActionPerformed
-
-    private void MnRekapitulasiRanapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnRekapitulasiRanapActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MnRekapitulasiRanapActionPerformed
 
     private void MnDepositActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnDepositActionPerformed
         if(tabMode.getRowCount()==0){
@@ -12051,6 +12076,38 @@ private void MnRujukMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     private void Rganti4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rganti4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_Rganti4ActionPerformed
+
+    private void MnRekapitulasiRanapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnRekapitulasiRanapActionPerformed
+        if(tabMode.getRowCount()==0){
+            JOptionPane.showMessageDialog(null,"Maaf, table masih kosong...!!!!");
+//            TCari.requestFocus();
+        }else if(tabMode.getRowCount()!=0){
+            try{
+                 Map<String, Object> param = new HashMap<>();    
+                 param.put("namars",akses.getnamars());
+                 param.put("alamatrs",akses.getalamatrs());
+                 param.put("kotars",akses.getkabupatenrs());
+                 param.put("propinsirs",akses.getpropinsirs());
+                 param.put("kontakrs",akses.getkontakrs());
+                 param.put("emailrs",akses.getemailrs());   
+                 param.put("logo",Sequel.cariGambar("select setting.logo from setting"));
+                 param.put("tgl_awal", (DTPCari1.getSelectedItem() + ""));
+                 param.put("tgl_akhir", (DTPCari2.getSelectedItem() + ""));
+                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                 Valid.MyReportqry("rptRekapSensusRanap.jasper","report","::[ Rekap Sensus Bulanan Ranap ]::","select kamar_inap.no_rawat,reg_periksa.no_rkm_medis,pasien.nm_pasien,penjab.png_jawab,kamar.kelas, "+
+"                                   kamar_inap.kd_kamar,bangsal.nm_bangsal,kamar_inap.tgl_masuk, " +
+"                                   kamar_inap.tgl_keluar,kamar_inap.stts_pulang,dokter.nm_dokter, spesialis.nm_sps from kamar_inap inner join reg_periksa " +
+"                                   inner join pasien inner join kamar inner join bangsal inner join dokter inner join penjab inner join spesialis " +
+"                                   on kamar_inap.no_rawat=reg_periksa.no_rawat and reg_periksa.no_rkm_medis=pasien.no_rkm_medis " +
+"                                   and reg_periksa.kd_dokter=dokter.kd_dokter and reg_periksa.kd_pj=penjab.kd_pj " +
+"                                   and kamar_inap.kd_kamar=kamar.kd_kamar and kamar.kd_bangsal=bangsal.kd_bangsal and dokter.kd_sps=spesialis.kd_sps where " +
+"                                   kamar_inap.tgl_masuk between '" + Valid.SetTgl(DTPCari1.getSelectedItem() + "")  + "' and '" + Valid.SetTgl(DTPCari2.getSelectedItem() + "")  + "'  group by kamar_inap.no_rawat",param);
+                 this.setCursor(Cursor.getDefaultCursor());            
+            }catch(Exception e){
+                System.out.println("Notifikasi : "+e);
+            } 
+        }
+    }//GEN-LAST:event_MnRekapitulasiRanapActionPerformed
 
     /**
     * @param args the command line arguments

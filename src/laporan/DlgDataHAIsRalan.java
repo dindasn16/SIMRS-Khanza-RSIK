@@ -695,7 +695,7 @@ public class DlgDataHAIsRalan extends javax.swing.JDialog {
 
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
         if(tbObat.getSelectedRow()!= -1){
-            if(Sequel.queryu2tf("delete from data_hais_ralan where tanggal=? and no_rawat=?",2,new String[]{
+            if(Sequel.queryu2tf("delete from data_HAIs_ralan where tanggal=? and no_rawat=?",2,new String[]{
                 tbObat.getValueAt(tbObat.getSelectedRow(),0).toString(),tbObat.getValueAt(tbObat.getSelectedRow(),1).toString()
             })==true){
                 tampil();
@@ -725,7 +725,7 @@ public class DlgDataHAIsRalan extends javax.swing.JDialog {
         }else if(IDO.getText().trim().equals("")){
             Valid.textKosong(IDO,"IDO");
         }else{
-            Sequel.mengedit("data_hais_ralan","tanggal=? and no_rawat=?","tanggal=?,no_rawat=?,tanggal_kontrol=?,tanggal_operasi=?,jenis_operasi=?,UC=?,ISK=?,IDO=?,ANTIBIOTIK=?,kd_poli?",12,new String[]{
+            Sequel.mengedit("data_HAIs_ralan","tanggal=? and no_rawat=?","tanggal=?,no_rawat=?,tanggal_kontrol=?,tanggal_operasi=?,jenis_operasi=?,UC=?,ISK=?,IDO=?,ANTIBIOTIK=?,kd_poli?",12,new String[]{
                 Valid.SetTgl(Tanggal.getSelectedItem()+""),TNoRw.getText(),Valid.SetTgl(Tanggal_Kontrol.getSelectedItem()+""),Valid.SetTgl(Tanggal_Operasi.getSelectedItem()+""),
                 Jenis_Operasi.getText(),UC.getText(),ISK.getText(),IDO.getText(),
                 Antibiotik.getText(),Poli.getText(),

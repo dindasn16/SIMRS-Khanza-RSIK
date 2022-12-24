@@ -376,51 +376,15 @@ where detail_pemberian_obat.tgl_perawatan=$P{tanggal} and detail_pemberian_obat.
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="55">
-			<textField>
-				<reportElement x="82" y="43" width="50" height="11" uuid="35f977fd-926a-42d2-becd-6685b668a916">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Right">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="132" y="43" width="50" height="11" uuid="c06e4232-58d2-4fd4-af88-6602673e1cf4">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Left">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
+		<band height="30">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="60" splitType="Stretch">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<textField isStretchWithOverflow="true">
-				<reportElement mode="Transparent" x="126" y="17" width="135" height="10" uuid="3dd83f6a-f0a4-499a-8e1b-944af3cb0a9b"/>
-				<textElement textAlignment="Center">
-					<font fontName="Tahoma" size="7"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{kotars}+", "+$P{tanggal}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="126" y="49" width="136" height="11" uuid="e757684f-3326-4bb9-a727-270237edbae2"/>
-				<textElement textAlignment="Center">
-					<font fontName="Tahoma" size="7"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{petugas}]]></textFieldExpression>
-			</textField>
+		<band height="60">
 			<textField isStretchWithOverflow="true" pattern="Rp #,##0.00">
-				<reportElement mode="Opaque" x="203" y="2" width="56" height="10" uuid="8b954619-537e-43f1-8db1-a5840459d763"/>
+				<reportElement mode="Opaque" x="157" y="0" width="102" height="10" uuid="8b954619-537e-43f1-8db1-a5840459d763"/>
 				<box leftPadding="1" rightPadding="1">
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -434,13 +398,28 @@ where detail_pemberian_obat.tgl_perawatan=$P{tanggal} and detail_pemberian_obat.
 				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Transparent" x="6" y="2" width="57" height="10" uuid="a8b8e363-490e-4ec7-a979-bb082d7f516a"/>
+				<reportElement mode="Transparent" x="6" y="0" width="57" height="10" uuid="a8b8e363-490e-4ec7-a979-bb082d7f516a"/>
 				<textElement markup="none">
 					<font fontName="Tahoma" size="8"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<text><![CDATA[TOTAL :]]></text>
 			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement mode="Transparent" x="157" y="18" width="105" height="10" uuid="3dd83f6a-f0a4-499a-8e1b-944af3cb0a9b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="7"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{kotars}+", "+$P{tanggal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="156" y="49" width="106" height="11" uuid="e757684f-3326-4bb9-a727-270237edbae2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{petugas}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
